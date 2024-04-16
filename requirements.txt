@@ -1,0 +1,17 @@
+opencv-python==4.9.0.80
+ipdb
+h5py
+wandb
+termcolor
+tensorboard
+hydra-core
+hydra-submitit-launcher
+gym
+dm-env
+imageio
+imageio-ffmpeg
+tqdm
+scipy
+blosc
+einops
+zmq

@@ -1,0 +1,58 @@
+defaults:
+  - local_config
+  - _self_
+  - agent: bc
+  - dataloader: xarm_env_aa
+  - suite: xarm_env_aa
+  # - override hydra/launcher: submitit_local
+
+# replay buffer
+batch_size: 256
+# misc
+seed: 0
+device: cuda
+save_video: true
+save_train_video: false
+use_tb: true
+eval: true
+
+# experiment
+num_demos_per_task: 5000
+encoder_type: 'resnet' # base, patch, resnet
+policy_type: 'gpt' # mlp, gpt
+policy_head: deterministic # deterministic, gmm, bet, diffusion, vqbet
+use_aux_inputs: true
+use_language: false
+use_actions: false
+sequential_train: false
+irl: false
+experiment: ${suite.name}_eval
+experiment_label: ${policy_head}
+
+# expert dataset
+num_demos: null #10(dmc), 1(metaworld), 1(particle), 1(robotgym)
+expert_dataset: ${dataloader.bc_dataset}
+
+# Load weights
+load_bc: false
+bc_weight: null
+
+# Action chunking parameters
+temporal_agg: true
+num_queries: 10
+
+# TODO: Fix this
+max_episode_len: 1000
+
+hydra:
+  job:
+    chdir: true
+  run:
+    dir: ./exp_local/${now:%Y.%m.%d}_${experiment}/${now:%H%M%S}_${experiment_label}
+  sweep:
+    dir: ./exp_local/${now:%Y.%m.%d}/${now:%H%M%S}
+    subdir: ${hydra.job.num}
+  # launcher:
+  #   tasks_per_node: 1
+  #   nodes: 1
+  #   submitit_folder: ./exp/${now:%Y.%m.%d}/${now:%H%M%S}_${experiment}/.slurm

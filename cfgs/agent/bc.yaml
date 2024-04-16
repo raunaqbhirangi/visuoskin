@@ -1,0 +1,24 @@
+# @package agent
+_target_: agent.bc.BCAgent
+obs_shape: ??? # to be specified later
+action_shape: ??? # to be specified later
+device: ${device}
+lr: 1e-4 #1e-5 #1e-4
+hidden_dim: ${suite.hidden_dim}
+stddev_schedule: 0.1
+stddev_clip: 0.3
+use_tb: ${use_tb}
+augment: True
+encoder_type: ${encoder_type}
+policy_type: ${policy_type}
+policy_head: ${policy_head}
+pixel_keys: ${suite.pixel_keys}
+aux_keys: ${suite.aux_keys}
+use_aux_inputs: ${use_aux_inputs}
+train_encoder: true
+norm: false
+separate_encoders: false # have a separate encoder for each pixel key
+temporal_agg: ${temporal_agg}
+max_episode_len: ${suite.task_make_fn.max_episode_len} # to be specified later
+num_queries: ${num_queries}
+use_actions: ${use_actions}
