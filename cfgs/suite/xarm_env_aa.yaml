@@ -1,0 +1,56 @@
+# @package suite
+defaults:
+  - _self_
+  - task: xarm_env
+
+suite: xarm_env
+name: "xarm_env"
+
+# task settings
+frame_stack: 1
+action_repeat: 1
+discount: 0.99
+hidden_dim: 256
+action_type: continuous
+
+# train settings
+num_train_steps: 10000
+log_every_steps: 100
+save_every_steps: 500
+num_train_steps_per_task: 20000 #2500 #5000
+
+# eval
+eval_every_steps: 200000 #20000 #5000
+num_eval_episodes: 5
+
+# data loading
+action_after_steps: 1 #8
+
+# obs_keys
+pixel_keys: ["pixels1", "pixels2", "pixels51", "pixels52"]
+aux_keys: ["sensor0","sensor1"]
+# aux_keys: ["digit80","digit81"]
+# aux_keys: ["sensor"]
+feature_key: "proprioceptive"
+sensor_params:
+  sensor_type: reskin
+  subtract_sensor_baseline: true
+
+# snapshot
+save_snapshot: true
+
+task_make_fn:
+  _target_: suite.xarm_env.make
+  frame_stack: ${suite.frame_stack}
+  action_repeat: ${suite.action_repeat}
+  height: ${img_size}
+  width: ${img_size}
+  max_episode_len: ??? # to be specified later
+  max_state_dim: ??? # to be specified later
+  use_egocentric: true
+  use_fisheye: true
+  task_description: "just training"
+  pixel_keys: ${suite.pixel_keys}
+  aux_keys: ${suite.aux_keys}
+  sensor_params: ${suite.sensor_params}
+  eval: ${eval} # eval true mean use robot

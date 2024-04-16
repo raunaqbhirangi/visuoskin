@@ -1,0 +1,17 @@
+bc_dataset:
+  _target_: read_data.xarm_env_aa.BCDataset
+  path: ${root_dir}/processed_data_pkl_aa
+  tasks: ${suite.task.tasks}
+  num_demos_per_task: ${num_demos_per_task}
+  temporal_agg: ${temporal_agg}
+  num_queries: ${num_queries}
+  img_size: ${img_size}
+  action_after_steps: ${suite.action_after_steps}
+  store_actions: true
+  pixel_keys: ${suite.pixel_keys}
+  aux_keys: ${suite.aux_keys}
+  subsample: 5
+  skip_first_n: 0
+  relative_actions: true
+  random_mask_proprio: false
+  sensor_params: ${suite.sensor_params}
