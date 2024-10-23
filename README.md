@@ -35,5 +35,5 @@ python convert_to_pkl.py -t current-task
 
 6. Run BC training
 ```
-python train_bc.py 'suite.task.tasks=[0802_insert_plug_triangle]'
+python train_bc.py 'suite.task.tasks=[current-task]'
 ```
